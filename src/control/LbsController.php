@@ -35,7 +35,7 @@ class LbsController{
         $cat->save();
         $resp = $resp->withStatus(201);
         $resp = $resp->withHeader('Location', "/categories/".$cat->id);
-        $resp = $resp->withJson(array('type' => 'created', 'code' => 201, 'message' => 'Successfully created'));
+        $resp = $resp->withJson(array('id' => $cat->id, 'nom' => $cat->nom, 'description' => $cat->description));
         return $resp;
     }
 }
