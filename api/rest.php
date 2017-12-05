@@ -23,6 +23,6 @@ $app = new \Slim\App($c);
 
 $app->get('/categories[/]','\lbs\control\LbsController:categories');
 
-$app->get('/categories/{id}[/]', '\lbs\control\LbsController:categoriesId');
+$app->get('/categories/{id}[/]','\lbs\control\LbsController:categoriesId');
 
 $app->run();
