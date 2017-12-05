@@ -24,7 +24,7 @@ $app = new \Slim\App($c);
 $app->get('/categories[/]', function (Request $req, Response $resp, $args){
 	$tablal = Categorie::all();
 	$resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
-	$resp->getBody()->write(json_encode($tablal));
+	$resp->getBody()->write(json_encode($tablal->toArray()));
 	return $resp;
 	}
 );
@@ -33,6 +33,7 @@ $app->get('/categories/{id}[/]', function (Request $req, Response $resp, $args) 
 	try {
 		$cats = Categorie::where("id", "=", $args['id'])->firstOrFail();
 	} catch (Exception $e) {
+		$resp = $resp->withStatus(404);
 		$resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categorie/'.$args['id']));
 		return $resp;
 	}
