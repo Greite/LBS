@@ -27,10 +27,8 @@ $app->get('/categories/{id}[/]','\lbs\control\LbsController:categoriesId');
 
 $app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
 
-<<<<<<< HEAD
 $app->get('/getsandwichs[/]', '\lbs\control\LbsController:getSandwichs');
-=======
+
 $app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
->>>>>>> 5733ee70ea1663e6f05a2dc13d0ec959dd55760a
 
 $app->run();

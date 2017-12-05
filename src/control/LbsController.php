@@ -13,7 +13,7 @@ class LbsController{
         $tablal = Categorie::all();
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $resp->getBody()->write(json_encode($tablal->toArray()));
-        return $resp;1
+        return $resp;
     }
     
     public function categoriesId(Request $req, Response $resp, $args) {
@@ -41,7 +41,6 @@ class LbsController{
     }
 
     public function getSandwichs(Request $req, Response $resp, $args){
-
         $type = $req->getQueryParam('type', NULL);
         $page = $req->getQueryParam('page', 1);
         $size = $req->getQueryParam('size',10);
@@ -50,7 +49,6 @@ class LbsController{
         if(!is_null($type)){
             $requete = $requete->where('type_pain','like',''.$type.'');
         }
-
         $requete = $requete->get();
         
         $count = $requete->count();
@@ -70,18 +68,8 @@ class LbsController{
         $resp->getBody()->write(json_encode($tab));
         return $resp;
 
-            /*
-            $last  = intdiv($count,$size)+1;
-            if($page > $page){
-                $page = $last;
-            }
+    }
 
-            $rows = $q->skip(($page-1)*$size)->take($size)->get()->toArray();
-            $sandwiches=[];
-
-        }catch(ModelNotFoundException $e){*/
-
-        }
 
 
     public function updateCategorie(Request $req, Response $resp, $args){
