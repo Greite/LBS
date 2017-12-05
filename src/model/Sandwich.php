@@ -4,9 +4,9 @@
 */
 namespace lbs\model;
 
-class Categorie extends \Illuminate\Database\Eloquent\Model
+class Sandwich extends \Illuminate\Database\Eloquent\Model
 {
-	protected $table = 'categorie';
+	protected $table = 'sandwich';
 	protected $primaryKey = 'id';
 	public $timestamps = false;
 }

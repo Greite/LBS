@@ -25,6 +25,8 @@ $app->get('/categories[/]','\lbs\control\LbsController:categories');
 
 $app->get('/categories/{id}[/]','\lbs\control\LbsController:categoriesId');
 
-$app->post('/add[/]', '\lbs\control\LbsController:addCategorie');
+$app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
+
+$app->get('/getsandwichs[/]', '\lbs\control\LbsController:getSandwichs');
 
 $app->run();
