@@ -18,12 +18,29 @@ class LbsController{
     public function categoriesId(Request $req, Response $resp, $args) {
         try{
             $cats = Categorie::where("id", "=", $args['id'])->firstOrFail();
+<<<<<<< HEAD
         }catch(ModelNotFoundException $e){
+=======
+        } catch (ModelNotFoundException $e) {
+>>>>>>> 3f241afff69fa90bf5882d9aabd7c3f18836130a
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categorie/'.$args['id']));
             return $resp;
         }
         $resp = $resp->withJson($cats);
         return $resp;
+<<<<<<< HEAD
+=======
+            
+        }
+
+    public function addCategorie(Request $req, Response $resp, $args){
+
+        $parsedBody = $req->getParsedBody();
+
+        $cat = new Categorie;
+        $cat->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $cat->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+>>>>>>> 3f241afff69fa90bf5882d9aabd7c3f18836130a
     }
 }
