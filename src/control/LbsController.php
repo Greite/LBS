@@ -13,7 +13,7 @@ class LbsController{
         $tablal = Categorie::all();
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $resp->getBody()->write(json_encode($tablal->toArray()));
-        return $resp;
+        return $resp;1
     }
     
     public function categoriesId(Request $req, Response $resp, $args) {
@@ -36,7 +36,7 @@ class LbsController{
         $cat->save();
         $resp = $resp->withStatus(201);
         $resp = $resp->withHeader('Location', "/categories/".$cat->id);
-        $resp = $resp->withJson(array('type' => 'created', 'code' => 201, 'message' => 'Successfully created'));
+        $resp = $resp->withJson(array('id' => $cat->id, 'nom' => $cat->nom, 'description' => $cat->description));
         return $resp;
     }
 
@@ -79,9 +79,30 @@ class LbsController{
             $rows = $q->skip(($page-1)*$size)->take($size)->get()->toArray();
             $sandwiches=[];
 
-        }catch(ModelNotFoundException $e){
+        }catch(ModelNotFoundException $e){*/
 
-        }/*/
+        }
+
+
+    public function updateCategorie(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        try{
+            $cat = Categorie::findOrFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categorie/'.$args['id']));
+            return $resp;
+        }
+        if (!isset($parsedBody['nom']) || !isset($parsedBody['description'])) {
+            return \lbs\common\errors\BadUri::error($req, $resp);
+        }else{
+            $cat->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $cat->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $cat->save();
+            $resp = $resp->withStatus(200);
+            $resp = $resp->withJson(array('id' => $cat->id, 'nom' => $cat->nom, 'description' => $cat->description));
+            return $resp;
+        }
 
     }
 }
