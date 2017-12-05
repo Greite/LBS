@@ -27,4 +27,6 @@ $app->get('/categories/{id}[/]', '\lbs\control\LbsController:categoriesId');
 
 $app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
 
+$app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
+
 $app->run();
