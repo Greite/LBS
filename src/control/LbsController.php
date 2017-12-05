@@ -27,4 +27,13 @@ class LbsController{
         return $resp;
             
         }
+
+    public function addCategorie(Request $req, Response $resp, $args){
+
+        $parsedBody = $req->getParsedBody();
+
+        $cat = new Categorie;
+        $cat->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $cat->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+    }
 }
