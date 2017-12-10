@@ -104,7 +104,15 @@ class LbsController{
             $tab["self"]=$href;
             $sandwichs[$i]["links"]=$tab;
         }
-        $resp->getBody()->write(json_encode($sandwichs));
+        $tabFinal = [
+            "type"=>"collection",
+            "meta"=>[
+                "count"=>$total,
+                $date=date('d/m/y')
+            ],
+            "sandwichs" => $sandwichs
+            ];
+        $resp->getBody()->write(json_encode($tabFinal));
         return $resp;
     }
 
