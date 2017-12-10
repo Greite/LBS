@@ -40,38 +40,6 @@ class LbsController{
         return $resp;
     }
 
-    public function getSandwichs(Request $req, Response $resp, $args){
-        $type = $req->getQueryParam('type', NULL);
-        $page = $req->getQueryParam('page', 1);
-        $size = $req->getQueryParam('size',10);
-
-        $requete = Sandwich::select(['nom','description','type_pain']);
-        if(!is_null($type)){
-            $requete = $requete->where('type_pain','like',''.$type.'');
-        }
-        $requete = $requete->get();
-        
-        $count = $requete->count();
-        $countStr = strval($count);
-        $date = date('d/m/y');
-        
-        $tab = [
-            "type"=>"collection",
-            "meta"=>[
-                "count"=>$countStr,
-                "date"=>$date
-            ],
-            "sandwichs"=>$requete
-        ];
-
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
-        $resp->getBody()->write(json_encode($tab));
-        return $resp;
-
-    }
-
-
-
     public function updateCategorie(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
         try{
@@ -93,4 +61,63 @@ class LbsController{
         }
 
     }
+
+    public function getSandwichs(Request $req,Response $resp,array $args){
+
+        $type = $req->getQueryParam('type',null);
+        $img = $req->getQueryParam('img',null);
+        $size = $req->getQueryParam('size',10);
+        $page = $req->getQueryParam('page',1);
+        $skip = $size*($page-1);
+
+        $requete = sandwich::select('id','nom','type_pain');
+
+        if(!is_null($type)){
+            $requete=$requete->where('type_pain','LIKE',''.$type.'%');
+        }
+        if(!is_null($img)){
+            $q=$q->where('img','LIKE',''.$img.'%');
+        }
+
+        $tailleRequete = $requete->get();
+        $total = count($tailleRequete);
+
+        $totalItem = $size + $skip;
+        if($totalItem>$total){
+            $page=floor(($total/$size));
+        }
+        if($page<=0){
+          $page=1;
+        }
+        
+        $skip = $size*($page-1);
+        $requete=$requete->skip($skip)->take($size);
+        $listeSandwichs = $requete->get();
+        
+        $resp=$resp->withHeader('Content-Type','application/json');
+        $resp=$resp->withHeader('Count',$total);
+        $resp=$resp->withHeader('Size',$size);
+        $resp=$resp->withHeader('Page',$page);
+        for($i=0;$i<sizeof($listeSandwichs);$i++){
+        $sandwichs[$i]["sandwich"]=$listeSandwichs[$i];
+            $href["href"]="sandwichs/".$listeSandwichs[$i]['id'];        
+            $tab["self"]=$href;
+            $sandwichs[$i]["links"]=$tab;
+        }
+        $resp->getBody()->write(json_encode($sandwichs));
+        return $resp;
+    }
+
+    public function getSandwichsId(Request $req, Response $resp, $args) {
+        try{
+            $sand = Sandwich::find($args['id'])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            return $resp;
+        }
+        $resp = $resp->withJson($sand);
+        return $resp;
+        }
+
 }
