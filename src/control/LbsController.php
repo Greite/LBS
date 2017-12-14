@@ -9,24 +9,36 @@ use \lbs\model\Sandwich;
 
 class LbsController{
 
-    public function categories(Request $req, Response $resp, $args){
+    public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();
+        $t = count($tablal);
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
-        $resp->getBody()->write(json_encode($tablal->toArray()));
+        $tabcat = [
+            "type"=>'collection',
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "categories"=>$tablal
+        ];
+        $resp = $resp->withJson($tabcat);
         return $resp;
     }
     
-    public function categoriesId(Request $req, Response $resp, $args) {
+    public function getCategoriesId(Request $req, Response $resp, $args) {
         try{
-            $cats = Categorie::where("id", "=", $args['id'])->firstOrFail();
+            $cats = Categorie::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categorie/'.$args['id']));
             return $resp;
         }
-        $resp = $resp->withJson($cats);
+        $tabcatid=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "categories"=>$cats
+        ];
+
+        $resp = $resp->withJson($tabcatid);
         return $resp;
-        }
+    }
 
     public function addCategorie(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
@@ -118,16 +130,59 @@ class LbsController{
 
     public function getSandwichsId(Request $req, Response $resp, $args) {
         try{
-            $sand = Sandwich::find($args['id'])->firstOrFail();
+            $sand = Sandwich::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
             return $resp;
         }
-        $resp = $resp->withJson($sand);
-        return $resp;
-        }
-    public function ok(){
 
+        $tabsandid=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "categories"=>$sand
+        ];
+
+        $resp = $resp->withJson($tabsandid);
+        return $resp;
     }
+
+    public function getSandsOfCat(Request $req, Response $resp, $args) {
+        try{
+            $sands = Categorie::findorFail($args['id'])->sandwichs;
+            $t = count($sands);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
+            return $resp;
+        }
+
+        $tabsandcat=[
+            "type"=>"collection",
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "categories"=>$sands
+        ];
+        $resp = $resp->withJson($tabsandcat);
+        return $resp;
+    }
+
+    public function getCatsOfSand(Request $req, Response $resp, $args) {
+        try{
+            $cats = Sandwich::findorFail($args['id'])->categories;
+            $t= count($cats);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            return $resp;
+        }
+
+        $tabcatsand=[
+            "type"=>"collection",
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "categories"=>$cats
+        ];
+        $resp = $resp->withJson($tabcatsand);
+        return $resp;
+    }
+
 }
