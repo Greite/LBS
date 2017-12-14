@@ -21,9 +21,9 @@ $configuration = array_merge($settings, $errors, $dependencies);
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
-$app->get('/categories[/]','\lbs\control\LbsController:categories');
+$app->get('/categories[/]','\lbs\control\LbsController:getCategories');
 
-$app->get('/categories/{id}[/]','\lbs\control\LbsController:categoriesId');
+$app->get('/categories/{id}[/]','\lbs\control\LbsController:getCategoriesId');
 
 $app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
 
@@ -33,5 +33,6 @@ $app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategori
 
 $app->get('/sandwichs/{id}[/]','\lbs\control\LbsController:getSandwichsId');
 
+$app->get('/categories/{id}/sandwichs[/]','\lbs\control\LbsController:getSandsOfCat');
 
 $app->run();

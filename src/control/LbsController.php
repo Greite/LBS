@@ -9,16 +9,16 @@ use \lbs\model\Sandwich;
 
 class LbsController{
 
-    public function categories(Request $req, Response $resp, $args){
+    public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $resp->getBody()->write(json_encode($tablal->toArray()));
         return $resp;
     }
     
-    public function categoriesId(Request $req, Response $resp, $args) {
+    public function getCategoriesId(Request $req, Response $resp, $args) {
         try{
-            $cats = Categorie::where("id", "=", $args['id'])->firstOrFail();
+            $cats = Categorie::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categorie/'.$args['id']));
@@ -26,7 +26,7 @@ class LbsController{
         }
         $resp = $resp->withJson($cats);
         return $resp;
-        }
+    }
 
     public function addCategorie(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
@@ -118,7 +118,7 @@ class LbsController{
 
     public function getSandwichsId(Request $req, Response $resp, $args) {
         try{
-            $sand = Sandwich::find($args['id'])->firstOrFail();
+            $sand = Sandwich::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
@@ -126,6 +126,18 @@ class LbsController{
         }
         $resp = $resp->withJson($sand);
         return $resp;
+    }
+
+    public function getSandsOfCat(Request $req, Response $resp, $args) {
+        try{
+            $sands = Categorie::findorFail($args['id'])->sandwichs;
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            return $resp;
         }
+        $resp = $resp->withJson($sands);
+        return $resp;
+    }
 
 }
