@@ -133,10 +133,22 @@ class LbsController{
             $sands = Categorie::findorFail($args['id'])->sandwichs;
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
             return $resp;
         }
         $resp = $resp->withJson($sands);
+        return $resp;
+    }
+
+    public function getCatsOfSand(Request $req, Response $resp, $args) {
+        try{
+            $cats = Sandwich::findorFail($args['id'])->categories;
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            return $resp;
+        }
+        $resp = $resp->withJson($cats);
         return $resp;
     }
 

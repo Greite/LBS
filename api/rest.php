@@ -35,4 +35,6 @@ $app->get('/sandwichs/{id}[/]','\lbs\control\LbsController:getSandwichsId');
 
 $app->get('/categories/{id}/sandwichs[/]','\lbs\control\LbsController:getSandsOfCat');
 
+$app->get('/sandwichs/{id}/categories[/]','\lbs\control\LbsController:getCatsOfSand');
+
 $app->run();

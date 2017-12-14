@@ -11,6 +11,6 @@ class Sandwich extends \Illuminate\Database\Eloquent\Model
 	public $timestamps = false;
 
     public function categories(){
-        return $this->belongsToMany('catawich\models\Categorie', 'sand2cat', 'sand_id', 'cat_id');
+        return $this->belongsToMany('lbs\model\Categorie', 'sand2cat', 'sand_id', 'cat_id');
     }
 }
