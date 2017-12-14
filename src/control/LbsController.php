@@ -140,7 +140,7 @@ class LbsController{
         $tabsandid=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
-            "categories"=>$sand
+            "sandwich"=>$sand
         ];
 
         $resp = $resp->withJson($tabsandid);
