@@ -127,5 +127,7 @@ class LbsController{
         $resp = $resp->withJson($sand);
         return $resp;
         }
+    public function ok(){
 
+    }
 }

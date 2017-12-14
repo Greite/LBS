@@ -33,5 +33,6 @@ $app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategori
 
 $app->get('/sandwichs/{id}[/]','\lbs\control\LbsController:getSandwichsId');
 
+$app->get('/categories/{id}/sandwichs[/]','\lbs\control\LbsController:getSandwichCategorie');
 
 $app->run();
