@@ -137,10 +137,21 @@ class LbsController{
             return $resp;
         }
 
+        $sand['categories'] = Sandwich::findorFail($args['id'])->categories;
+        $sand['tailles'] = Sandwich::findorFail($args['id'])->tailleSandwichs;
+
         $tabsandid=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
-            "categories"=>$sand
+            "sandwich"=>$sand,
+            "links"=> [
+                "categories" => [
+                    "href" => "/sandwichs/".$args['id']."/categories"
+                    ],
+                "tailles" => [
+                    "href" => "/sandwichs/".$args['id']."/tailles"
+                ]
+            ]
         ];
 
         $resp = $resp->withJson($tabsandid);
@@ -182,6 +193,25 @@ class LbsController{
             "categories"=>$cats
         ];
         $resp = $resp->withJson($tabcatsand);
+        return $resp;
+    }
+
+    public function getTaillesOfSand(Request $req, Response $resp, $args) {
+        try{
+            $tailles = Sandwich::findorFail($args['id'])->tailleSandwichs;
+            $t= count($tailles);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
+            return $resp;
+        }
+
+        $tabtailles=[
+            "type"=>"collection",
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "tailles"=>$tailles
+        ];
+        $resp = $resp->withJson($tabtailles);
         return $resp;
     }
 
