@@ -4,9 +4,10 @@ namespace lbs\control ;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \lbs\model\Categorie as Categorie;
+use \lbs\model\Categorie;
 use \lbs\model\Sandwich;
 use \lbs\model\Commande;
+use Ramsey\Uuid\Uuid;
 
 class LbsController{
 
@@ -75,7 +76,7 @@ class LbsController{
 
     }
 
-    public function getSandwichs(Request $req,Response $resp,array $args){
+    public function getSandwichs(Request $req,Response $resp, $args){
 
         $type = $req->getQueryParam('type',null);
         $img = $req->getQueryParam('img',null);
@@ -89,7 +90,7 @@ class LbsController{
             $requete=$requete->where('type_pain','LIKE',''.$type.'%');
         }
         if(!is_null($img)){
-            $q=$q->where('img','LIKE',''.$img.'%');
+            $q = $q->where('img','LIKE',''.$img.'%');
         }
 
         $tailleRequete = $requete->get();
@@ -231,8 +232,30 @@ class LbsController{
             "meta"=>[$date=date('d/m/y')],
             "categories"=>$comm
         ];
-
         $resp = $resp->withJson($tabcomid);
+        return $resp;
+    }
+
+    public function addCommande(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $com = new Commande;
+        $uuid4 = Uuid::uuid4();
+        $com->id = $uuid4;
+        $com->nom_client = filter_var($parsedBody['nom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->prenom_client = filter_var($parsedBody['prenom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->mail_client = filter_var($parsedBody['mail_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->date_livraison = filter_var($parsedBody['date_livraison'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->etat = 0;
+        $token = random_bytes(32);
+        $token = bin2hex($token);
+        $com->token = $token;
+        $com->save();
+        $resp = $resp->withStatus(201);
+        //$resp = $resp->withHeader('Location', "/categories/".$cat->id);
+        $livraison = array('date' =>$com->date_livraison, 'heure' => $com->date_livraison);
+        $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
+        $resp = $resp->withJson(array('commande' => $commande));
+
         return $resp;
     }
 }

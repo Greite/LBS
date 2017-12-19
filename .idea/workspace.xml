@@ -2,9 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07689e16-ffd3-41d4-ba7e-ff631cf84aef" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/LICENSE" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/build-phar.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/composer.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/dist/random_compat.phar.pubkey" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/dist/random_compat.phar.pubkey.asc" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/byte_safe_strings.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/cast_to_int.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/error_polyfill.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_bytes_com_dotnet.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_bytes_dev_urandom.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_bytes_libsodium.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_bytes_libsodium_legacy.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_bytes_mcrypt.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/lib/random_int.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/other/build_phar.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/psalm-autoload.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/vendor/paragonie/random_compat/psalm.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/LBS.iml" afterPath="$PROJECT_DIR$/.idea/LBS.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
       <change beforePath="$PROJECT_DIR$/api/rest.php" afterPath="$PROJECT_DIR$/api/rest.php" />
+      <change beforePath="$PROJECT_DIR$/src/composer.json" afterPath="$PROJECT_DIR$/src/composer.json" />
+      <change beforePath="$PROJECT_DIR$/src/composer.lock" afterPath="$PROJECT_DIR$/src/composer.lock" />
       <change beforePath="$PROJECT_DIR$/src/control/LbsController.php" afterPath="$PROJECT_DIR$/src/control/LbsController.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/autoload.php" afterPath="$PROJECT_DIR$/src/vendor/autoload.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/src/vendor/composer/ClassLoader.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/LICENSE" afterPath="$PROJECT_DIR$/src/vendor/composer/LICENSE" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/src/vendor/composer/autoload_files.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/src/vendor/composer/autoload_psr4.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/autoload_real.php" afterPath="$PROJECT_DIR$/src/vendor/composer/autoload_real.php" />
+      <change beforePath="$PROJECT_DIR$/src/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/src/vendor/composer/installed.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/api/rest.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="615">
-              <caret line="41" column="62" lean-forward="false" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
+              <caret line="43" column="62" lean-forward="false" selection-start-line="43" selection-start-column="62" selection-end-line="43" selection-end-column="62" />
               <folding>
                 <element signature="e#45#101#0#PHP" expanded="true" />
               </folding>
@@ -53,8 +81,8 @@
       <file leaf-file-name="LbsController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/control/LbsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1590">
-              <caret line="219" column="4" lean-forward="false" selection-start-line="219" selection-start-column="4" selection-end-line="219" selection-end-column="4" />
+            <state relative-caret-position="431">
+              <caret line="235" column="21" lean-forward="true" selection-start-line="235" selection-start-column="21" selection-end-line="235" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -122,6 +150,7 @@
       <path value="$PROJECT_DIR$/src/vendor/psr/container" />
       <path value="$PROJECT_DIR$/src/vendor/illuminate/support" />
       <path value="$PROJECT_DIR$/src/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/src/vendor/paragonie/random_compat" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
@@ -249,7 +278,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24620000" />
+    <option name="totallyTimeSpent" value="24732000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1048" extended-state="6" />
@@ -568,7 +597,7 @@
     <entry file="file://$PROJECT_DIR$/api/rest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
-          <caret line="41" column="62" lean-forward="false" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
+          <caret line="43" column="62" lean-forward="false" selection-start-line="43" selection-start-column="62" selection-end-line="43" selection-end-column="62" />
           <folding>
             <element signature="e#45#101#0#PHP" expanded="true" />
           </folding>
@@ -585,8 +614,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/LbsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1590">
-          <caret line="219" column="4" lean-forward="false" selection-start-line="219" selection-start-column="4" selection-end-line="219" selection-end-column="4" />
+        <state relative-caret-position="431">
+          <caret line="235" column="21" lean-forward="true" selection-start-line="235" selection-start-column="21" selection-end-line="235" selection-end-column="21" />
           <folding />
         </state>
       </provider>
