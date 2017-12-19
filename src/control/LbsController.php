@@ -147,9 +147,11 @@ class LbsController{
             "links"=> [
                 "categories" => [
                     "href" => "/sandwichs/".$args['id']."/categories"
+                    //"href" => $this->c->get('router')->pathFor('sandwich2cat', $args['id'])
                     ],
                 "tailles" => [
                     "href" => "/sandwichs/".$args['id']."/tailles"
+                    //"href" => $this->c->get('router')->pathFor('sandwich2taille', $args['id'])
                 ]
             ]
         ];
@@ -213,6 +215,10 @@ class LbsController{
         ];
         $resp = $resp->withJson($tabtailles);
         return $resp;
+    }
+
+    public function addCommande(Request $req, Response $resp, $args) {
+
     }
 
 }
