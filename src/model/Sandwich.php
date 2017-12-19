@@ -16,7 +16,6 @@ class Sandwich extends \Illuminate\Database\Eloquent\Model
     }
 
     public function tailleSandwichs(){
-        return $this->belongsToMany('lbs\model\TailleSandwich', 'tarif', 'sand_id', 'taille_id')->withPivot("prix");
+        return $this->belongsToMany('lbs\model\TailleSandwich', 'tarif', 'sand_id', 'taille_id')->as('tarif')->withPivot('prix');
     }
-
 }

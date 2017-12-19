@@ -136,9 +136,9 @@ class LbsController{
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /sandwichs/'.$args['id']));
             return $resp;
         }
-
-        $sand['categories'] = Sandwich::findorFail($args['id'])->categories;
-        $sand['tailles'] = Sandwich::findorFail($args['id'])->tailleSandwichs;
+        $sandwich = Sandwich::findorFail($args['id']);
+        $sand['categories'] = $sandwich->categories()->select(['id', 'nom'])->get()->toArray();
+        $sand['tailles'] = $sandwich->tailleSandwichs()->select(['id', 'nom', 'tarif.prix'])->get()->toArray();
 
         $tabsandid=[
             "type"=>"ressource",
