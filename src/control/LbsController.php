@@ -217,12 +217,22 @@ class LbsController{
         $resp = $resp->withJson($tabtailles);
         return $resp;
     }
+    
+    public function getCommande(Request $req, Response $resp, $args) {
+        try{
+            $comm = Commande::findorFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
+            return $resp;
+        }
+        $tabcomid=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "categories"=>$comm
+        ];
 
-
-    public function addCommande(Request $req, Response $resp, $args){
-        $parsedBody = $req->getParsedBody();
-        $com = new Commande;
-        $com->nom_client = filter_var($parsedBody['nom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->date_livraison = $parsedBody['date_livraison'];
+        $resp = $resp->withJson($tabcomid);
+        return $resp;
+    }
 }
