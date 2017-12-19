@@ -6,6 +6,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \lbs\model\Categorie as Categorie;
 use \lbs\model\Sandwich;
+use \lbs\model\Commande;
 
 class LbsController{
 
@@ -88,7 +89,7 @@ class LbsController{
             $requete=$requete->where('type_pain','LIKE',''.$type.'%');
         }
         if(!is_null($img)){
-            $q=$q->where('img','LIKE',''.$img.'%');
+            $q = $q->where('img','LIKE',''.$img.'%');
         }
 
         $tailleRequete = $requete->get();
@@ -213,6 +214,23 @@ class LbsController{
         ];
         $resp = $resp->withJson($tabtailles);
         return $resp;
+    }
+
+    public function addCommande(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $com = new Commande;
+        $com->id = $parsedBody['id'];
+        $com->nom_client = filter_var($parsedBody['nom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->date_livraison = filter_var($parsedBody['date_livraison'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $com->prenom_client = $parsedBody['prenom_client'];
+        $com->etat = $parsedBody['etat'];
+        $com->token = $parsedBody['token'];
+        $com->save();
+        /*$commande = Commande::select()->first();
+        echo $commande->date_livraison;*/
+
+
     }
 
 }
