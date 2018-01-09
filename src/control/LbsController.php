@@ -149,9 +149,11 @@ class LbsController{
             "links"=> [
                 "categories" => [
                     "href" => "/sandwichs/".$args['id']."/categories"
+                    //"href" => $this->c->get('router')->pathFor('sandwich2cat', $args['id'])
                     ],
                 "tailles" => [
                     "href" => "/sandwichs/".$args['id']."/tailles"
+                    //"href" => $this->c->get('router')->pathFor('sandwich2taille', $args['id'])
                 ]
             ]
         ];
@@ -216,6 +218,23 @@ class LbsController{
         $resp = $resp->withJson($tabtailles);
         return $resp;
     }
+    
+    public function getCommande(Request $req, Response $resp, $args) {
+        try{
+            $comm = Commande::findorFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
+            return $resp;
+        }
+        $tabcomid=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "categories"=>$comm
+        ];
+        $resp = $resp->withJson($tabcomid);
+        return $resp;
+    }
 
     public function addCommande(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
@@ -236,7 +255,7 @@ class LbsController{
         $livraison = array('date' =>$date[0], 'heure' => $date[1]);
         $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
         $resp = $resp->withJson(array('commande' => $commande));
+
         return $resp;
     }
-
 }

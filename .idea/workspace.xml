@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07689e16-ffd3-41d4-ba7e-ff631cf84aef" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/model/TailleSandwich.php" />
-      <change beforePath="$PROJECT_DIR$/.idea/LBS.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/api/rest.php" afterPath="$PROJECT_DIR$/api/rest.php" />
-      <change beforePath="$PROJECT_DIR$/src/control/LbsController.php" afterPath="$PROJECT_DIR$/src/control/LbsController.php" />
-      <change beforePath="$PROJECT_DIR$/src/model/Sandwich.php" afterPath="$PROJECT_DIR$/src/model/Sandwich.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,12 +16,52 @@
     <pharConfigPath>$PROJECT_DIR$/src/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="rest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/rest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sandwich.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Sandwich.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TailleSandwich.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/TailleSandwich.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="LbsController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/control/LbsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="819">
-              <caret line="212" column="10" lean-forward="true" selection-start-line="212" selection-start-column="10" selection-end-line="212" selection-end-column="10" />
+            <state relative-caret-position="431">
+              <caret line="235" column="21" lean-forward="false" selection-start-line="235" selection-start-column="21" selection-end-line="235" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Categorie.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Categorie.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -56,8 +89,8 @@
         <option value="$PROJECT_DIR$/src/common/errors/Internal.php" />
         <option value="$PROJECT_DIR$/src/common/errors/BadUri.php" />
         <option value="$PROJECT_DIR$/src/model/Categorie.php" />
-        <option value="$PROJECT_DIR$/api/rest.php" />
         <option value="$PROJECT_DIR$/src/control/LbsController.php" />
+        <option value="$PROJECT_DIR$/api/rest.php" />
       </list>
     </option>
   </component>
@@ -85,9 +118,11 @@
       <path value="$PROJECT_DIR$/src/vendor/illuminate/contracts" />
       <path value="$PROJECT_DIR$/src/vendor/psr/container" />
       <path value="$PROJECT_DIR$/src/vendor/illuminate/support" />
+      <path value="$PROJECT_DIR$/src/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/src/vendor/paragonie/random_compat" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-214" />
     <option name="width" value="1366" />
     <option name="height" value="745" />
@@ -118,6 +153,16 @@
             <path>
               <item name="LBS" type="b2602c69:ProjectViewProjectNode" />
               <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="api" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="LBS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sql" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="LBS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -125,6 +170,18 @@
               <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="control" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="LBS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="model" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="LBS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LBS" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="vendor" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -186,17 +243,18 @@
       <workItem from="1513243713817" duration="4257000" />
       <workItem from="1513333780865" duration="27000" />
       <workItem from="1513691526936" duration="38000" />
+      <workItem from="1515508010923" duration="684000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21787000" />
+    <option name="totallyTimeSpent" value="25721000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="-1" width="1372" height="749" extended-state="6" />
+    <frame x="-214" y="0" width="1920" height="1054" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15885799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15885417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -229,13 +287,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/common/errors/Internal.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="93" lean-forward="false" selection-start-line="10" selection-start-column="93" selection-end-line="10" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/errors/BadUri.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -486,31 +537,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/rest.php">
+    <entry file="file://$PROJECT_DIR$/src/model/Categorie.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Sandwich.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        <state relative-caret-position="285">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Categorie.php">
+    <entry file="file://$PROJECT_DIR$/src/model/TailleSandwich.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="91" lean-forward="false" selection-start-line="14" selection-start-column="91" selection-end-line="14" selection-end-column="91" />
+        <state relative-caret-position="195">
+          <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/rest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/LbsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="212" column="10" lean-forward="true" selection-start-line="212" selection-start-column="10" selection-end-line="212" selection-end-column="10" />
+        <state relative-caret-position="431">
+          <caret line="235" column="21" lean-forward="false" selection-start-line="235" selection-start-column="21" selection-end-line="235" selection-end-column="21" />
           <folding />
         </state>
       </provider>
