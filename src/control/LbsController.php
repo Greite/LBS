@@ -232,8 +232,8 @@ class LbsController{
         $com->token = $token;
         $com->save();
         $resp = $resp->withStatus(201);
-        //$resp = $resp->withHeader('Location', "/categories/".$cat->id);
-        $livraison = array('date' =>$com->date_livraison, 'heure' => $com->date_livraison);
+        $date = explode(" ", $com->date_livraison);
+        $livraison = array('date' =>$date[0], 'heure' => $date[1]);
         $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
         $resp = $resp->withJson(array('commande' => $commande));
         return $resp;
