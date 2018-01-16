@@ -246,8 +246,30 @@ class LbsController{
         $com->id = $uuid4;
 
         if(is_null($parsedBody['nom_client']) || is_null($parsedBody['date_livraison']) || is_null($parsedBody['mail_client']) || filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
+            $message="";
+            if(is_null($parsedBody['nom_client'])){
+                $message=$message."Veuillez renseigner le nom du client";
+            }
+            if(is_null($parsedBody['date_livraison'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner la date de livraison";
+            }
+            if(is_null($parsedBody['mail_client'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner le mail du client ";
+            }
+            if(filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Mauvais format de mail";
+            }
             $resp = $resp->withStatus(400);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 400, 'message' => 'Ressource manquante : /addcommande/'));
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 400, 'message' => $message));
             return $resp;
         }
         else{
