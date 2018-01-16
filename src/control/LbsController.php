@@ -227,10 +227,13 @@ class LbsController{
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
             return $resp;
         }
+        $date = explode(" ", $comm->date_livraison);
+        $livraison = array('date' =>$date[0], 'heure' => $date[1]);
+        $commande = array('id' => $comm->id, 'nom_client' => $comm->nom_client, 'prenom_client' => $comm->prenom_client, 'mail_client' => $comm->mail_client, 'livraison' => $livraison, 'token' => $comm->token);
         $tabcomid=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
-            "categories"=>$comm
+            "categories"=>$commande
         ];
         $resp = $resp->withJson($tabcomid);
         return $resp;
