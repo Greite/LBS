@@ -90,7 +90,7 @@ class LbsController{
             $requete=$requete->where('type_pain','LIKE',''.$type.'%');
         }
         if(!is_null($img)){
-            $q = $q->where('img','LIKE',''.$img.'%');
+            $requete = $requete->where('img','LIKE',''.$img.'%');
         }
 
         $tailleRequete = $requete->get();
@@ -218,23 +218,6 @@ class LbsController{
         $resp = $resp->withJson($tabtailles);
         return $resp;
     }
-    
-    public function getCommande(Request $req, Response $resp, $args) {
-        try{
-            $comm = Commande::findorFail($args['id']);
-        } catch (ModelNotFoundException $e) {
-            $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
-            return $resp;
-        }
-        $tabcomid=[
-            "type"=>"ressource",
-            "meta"=>[$date=date('d/m/y')],
-            "categories"=>$comm
-        ];
-        $resp = $resp->withJson($tabcomid);
-        return $resp;
-    }
 
     public function addCommande(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
@@ -256,6 +239,31 @@ class LbsController{
         $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
         $resp = $resp->withJson(array('commande' => $commande));
 
+        return $resp;
+    }
+
+    public function getCommande(Request $req, Response $resp, $args) {
+        try{
+            $tok = $req->getQueryParam('token',null);
+            $comm = Commande::find(args['id']);
+
+            if(!is_null($tok)){
+                $comm = $comm->where("token","like",''.$tok.'');
+            }
+
+            $comm = $comm->get();
+
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
+            return $resp;
+        }
+        $tabcomid=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "categories"=>$comm
+        ];
+        $resp = $resp->withJson($tabcomid);
         return $resp;
     }
 }
