@@ -45,6 +45,8 @@ $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
 $app->post('/addcommande[/]','\lbs\control\LbsController:addCommande');
 
+$app->post('/cartes/{id}/auth','\lbs\control\LbsController:authentificationCarte');
+
 $app->post('/addcarte[/]','\lbs\control\LbsController:addCarte');
 
 $app->run();
