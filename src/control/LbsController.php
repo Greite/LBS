@@ -7,6 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \lbs\model\Categorie;
 use \lbs\model\Sandwich;
 use \lbs\model\Commande;
+use \lbs\model\Carte;
 use Ramsey\Uuid\Uuid;
 
 class LbsController{
@@ -246,8 +247,30 @@ class LbsController{
         $com->id = $uuid4;
 
         if(is_null($parsedBody['nom_client']) || is_null($parsedBody['date_livraison']) || is_null($parsedBody['mail_client']) || filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
-            $resp = $resp->withStatus(400);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 400, 'message' => 'Ressource manquante : /addcommande/'));
+            $message="";
+            if(is_null($parsedBody['nom_client'])){
+                $message=$message."Veuillez renseigner le nom du client";
+            }
+            if(is_null($parsedBody['date_livraison'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner la date de livraison";
+            }
+            if(is_null($parsedBody['mail_client'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner le mail du client ";
+            }
+            if(filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Mauvais format de mail";
+            }
+            $resp = $resp->withStatus(409);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 409, 'message' => $message));
             return $resp;
         }
         else{
@@ -271,7 +294,26 @@ class LbsController{
         }
     }
 
-    public function authentificationCarte(){
+
+    public function authentificationCarte(){}
+
+    public function addCarte(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $carte = new Carte;
+        $token = random_bytes(5);
+        $token = bin2hex($token);
+        $carte->id_carte = $token;
+        $carte->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $carte->password = password_hash(filter_var($parsedBody['password'], FILTER_SANITIZE_SPECIAL_CHARS), PASSWORD_DEFAULT);
+        $carte->date_expiration = date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 365 day"));;
+        $carte->montant = 0;
+        $carte->save();
+        $resp = $resp->withStatus(201);
+        $date = explode(" ", $carte->date_expiration);
+        $card = array('id' => $token, 'mail' => $carte->mail, 'date_expiration' => $date[0]);
+        $resp = $resp->withJson(array('carte' => $card));
+
+        return $resp;
 
     }
 }
