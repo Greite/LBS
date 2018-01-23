@@ -42,6 +42,7 @@ $app->get('/sandwichs/{id}/categories[/]','\lbs\control\LbsController:getCatsOfS
 $app->get('/sandwichs/{id}/tailles[/]','\lbs\control\LbsController:getTaillesOfSand')->setName('sandwich2taille');
 
 $app->get('/commandes/{id}[/]','\lbs\control\LbsController:getCommande');
+
 $app->post('/addcommande[/]','\lbs\control\LbsController:addCommande');
 
 $app->run();

@@ -90,7 +90,7 @@ class LbsController{
             $requete=$requete->where('type_pain','LIKE',''.$type.'%');
         }
         if(!is_null($img)){
-            $q = $q->where('img','LIKE',''.$img.'%');
+            $requete = $requete->where('img','LIKE',''.$img.'%');
         }
 
         $tailleRequete = $requete->get();
@@ -227,10 +227,13 @@ class LbsController{
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /commande/'.$args['id']));
             return $resp;
         }
+        $date = explode(" ", $comm->date_livraison);
+        $livraison = array('date' =>$date[0], 'heure' => $date[1]);
+        $commande = array('id' => $comm->id, 'nom_client' => $comm->nom_client, 'prenom_client' => $comm->prenom_client, 'mail_client' => $comm->mail_client, 'livraison' => $livraison, 'token' => $comm->token);
         $tabcomid=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
-            "categories"=>$comm
+            "categories"=>$commande
         ];
         $resp = $resp->withJson($tabcomid);
         return $resp;
@@ -241,21 +244,51 @@ class LbsController{
         $com = new Commande;
         $uuid4 = Uuid::uuid4();
         $com->id = $uuid4;
-        $com->nom_client = filter_var($parsedBody['nom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->prenom_client = filter_var($parsedBody['prenom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->mail_client = filter_var($parsedBody['mail_client'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->date_livraison = filter_var($parsedBody['date_livraison'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $com->etat = 0;
-        $token = random_bytes(32);
-        $token = bin2hex($token);
-        $com->token = $token;
-        $com->save();
-        $resp = $resp->withStatus(201);
-        //$resp = $resp->withHeader('Location', "/categories/".$cat->id);
-        $livraison = array('date' =>$com->date_livraison, 'heure' => $com->date_livraison);
-        $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
-        $resp = $resp->withJson(array('commande' => $commande));
 
-        return $resp;
+        if(is_null($parsedBody['nom_client']) || is_null($parsedBody['date_livraison']) || is_null($parsedBody['mail_client']) || filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
+            $message="";
+            if(is_null($parsedBody['nom_client'])){
+                $message=$message."Veuillez renseigner le nom du client";
+            }
+            if(is_null($parsedBody['date_livraison'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner la date de livraison";
+            }
+            if(is_null($parsedBody['mail_client'])){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Veuillez renseigner le mail du client ";
+            }
+            if(filter_var($parsedBody['mail_client'], FILTER_VALIDATE_EMAIL) === false){
+                if (!is_null($message)){
+                    $message=$message." / ";
+                }
+                $message=$message."Mauvais format de mail";
+            }
+            $resp = $resp->withStatus(409);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 409, 'message' => $message));
+            return $resp;
+        }
+        else{
+            $com->nom_client = filter_var($parsedBody['nom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $com->prenom_client = filter_var($parsedBody['prenom_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $com->mail_client = filter_var($parsedBody['mail_client'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $com->date_livraison = filter_var($parsedBody['date_livraison'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $com->etat = 0;
+            $token = random_bytes(32);
+            $token = bin2hex($token);
+            $com->token = $token;
+            $com->save();
+            $resp = $resp->withStatus(201);
+            $date = explode(" ", $com->date_livraison);
+            $livraison = array('date' =>$date[0], 'heure' => $date[1]);
+            $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
+            $resp = $resp->withJson(array('commande' => $commande));
+
+            return $resp;
+        }
     }
 }
