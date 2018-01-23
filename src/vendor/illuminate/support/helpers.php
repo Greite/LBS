@@ -548,7 +548,7 @@ if (! function_exists('dd')) {
     /**
      * Dump the passed variables and end the script.
      *
-     * @param  mixed  $args
+     * @param  mixed
      * @return void
      */
     function dd(...$args)
@@ -1040,41 +1040,35 @@ if (! function_exists('tap')) {
 
 if (! function_exists('throw_if')) {
     /**
-     * Throw the given exception if the given condition is true.
+     * Throw the given exception if the given boolean is true.
      *
-     * @param  mixed  $condition
+     * @param  bool  $boolean
      * @param  \Throwable|string  $exception
      * @param  array  ...$parameters
-     * @return mixed
-     * @throws \Throwable
+     * @return void
      */
-    function throw_if($condition, $exception, ...$parameters)
+    function throw_if($boolean, $exception, ...$parameters)
     {
-        if ($condition) {
+        if ($boolean) {
             throw (is_string($exception) ? new $exception(...$parameters) : $exception);
         }
-
-        return $condition;
     }
 }
 
 if (! function_exists('throw_unless')) {
     /**
-     * Throw the given exception unless the given condition is true.
+     * Throw the given exception unless the given boolean is true.
      *
-     * @param  mixed  $condition
+     * @param  bool  $boolean
      * @param  \Throwable|string  $exception
      * @param  array  ...$parameters
-     * @return mixed
-     * @throws \Throwable
+     * @return void
      */
-    function throw_unless($condition, $exception, ...$parameters)
+    function throw_unless($boolean, $exception, ...$parameters)
     {
-        if (! $condition) {
+        if (! $boolean) {
             throw (is_string($exception) ? new $exception(...$parameters) : $exception);
         }
-
-        return $condition;
     }
 }
 
