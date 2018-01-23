@@ -268,8 +268,8 @@ class LbsController{
                 }
                 $message=$message."Mauvais format de mail";
             }
-            $resp = $resp->withStatus(400);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 400, 'message' => $message));
+            $resp = $resp->withStatus(409);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 409, 'message' => $message));
             return $resp;
         }
         else{
