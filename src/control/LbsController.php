@@ -7,6 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \lbs\model\Categorie;
 use \lbs\model\Sandwich;
 use \lbs\model\Commande;
+use \lbs\model\Carte;
 use Ramsey\Uuid\Uuid;
 
 class LbsController{
@@ -286,9 +287,33 @@ class LbsController{
             $date = explode(" ", $com->date_livraison);
             $livraison = array('date' =>$date[0], 'heure' => $date[1]);
             $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
+            $resp = $resp->withHeader("Location" , "/commandes/".$uuid4);
             $resp = $resp->withJson(array('commande' => $commande));
 
             return $resp;
         }
+    }
+
+
+    public function authentificationCarte(){}
+
+    public function addCarte(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $carte = new Carte;
+        $token = random_bytes(5);
+        $token = bin2hex($token);
+        $carte->id_carte = $token;
+        $carte->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $carte->password = password_hash(filter_var($parsedBody['password'], FILTER_SANITIZE_SPECIAL_CHARS), PASSWORD_DEFAULT);
+        $carte->date_expiration = date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 365 day"));;
+        $carte->montant = 0;
+        $carte->save();
+        $resp = $resp->withStatus(201);
+        $date = explode(" ", $carte->date_expiration);
+        $card = array('id' => $token, 'mail' => $carte->mail, 'date_expiration' => $date[0]);
+        $resp = $resp->withJson(array('carte' => $card));
+
+        return $resp;
+
     }
 }
