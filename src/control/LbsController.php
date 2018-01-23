@@ -264,9 +264,14 @@ class LbsController{
             $date = explode(" ", $com->date_livraison);
             $livraison = array('date' =>$date[0], 'heure' => $date[1]);
             $commande = array('nom_client' => $com->nom_client, 'mail_client' => $com->mail_client, 'livraison' => $livraison, 'id' => $uuid4, 'token' => $token);
+            $resp = $resp->withHeader("Location" , "/commandes/".$uuid4);
             $resp = $resp->withJson(array('commande' => $commande));
 
             return $resp;
         }
+    }
+
+    public function authentificationCarte(){
+
     }
 }
