@@ -41,8 +41,11 @@ $app->get('/sandwichs/{id}/tailles[/]','\lbs\control\LbsController:getTaillesOfS
 
 $app->post('/addcommande[/]','\lbs\control\LbsController:addCommande');
 
-$app->post('/cartes/{id}/auth','\lbs\control\LbsController:authentificationCarte');
+$app->get('/carte/{id}/auth','\lbs\control\LbsController:authentificationCarte');
 
 $app->post('/addcarte[/]','\lbs\control\LbsController:addCarte');
+
+$app->get('/carte/{id}[/]','\lbs\control\LbsController:getCarte');
+
 
 $app->run();
