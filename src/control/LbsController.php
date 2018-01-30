@@ -286,6 +286,39 @@ class LbsController{
             $token = random_bytes(32);
             $token = bin2hex($token);
             $com->token = $token;
+            if(!is_null($parsedBody['carte'])){
+                try {
+                    $secret = "test";
+                    $h = $req->getHeader('Authorization')[0];
+                    $tokenstring = sscanf($h, "Bearer %s")[0];
+                    $tok = JWT::decode($tokenstring, $secret, ['HS512']);
+                    if($tok->uid != $parsedBody['carte']){
+                        $resp = $resp->withStatus(401);
+                        $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
+                        return $resp;
+                    }else{
+                        $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
+                        $com->carte = $carte->id_carte;
+                    }
+
+                }catch(ExpiredException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
+                    return $resp;
+                }catch(SignatureInvalidException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
+                    return $resp;
+                }catch(BeforeValidException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les information ne correspondent pas"));
+                    return $resp;
+                }catch(\UnexpectedValueException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+                    return $resp;
+                }
+            }
             $com->save();
             $resp = $resp->withStatus(201);
             $date = explode(" ", $com->date_livraison);
@@ -304,7 +337,7 @@ class LbsController{
         $token = random_bytes(5);
         $token = bin2hex($token);
         $carte->id_carte = $token;
-        $carte->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $carte->mail = filter_var($parsedBody['mail'], FILTER_VALIDATE_EMAIL);
         $carte->password = password_hash(filter_var($parsedBody['password'], FILTER_SANITIZE_SPECIAL_CHARS), PASSWORD_DEFAULT);
         $carte->date_expiration = date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 365 day"));;
         $carte->montant = 0;
@@ -340,7 +373,7 @@ class LbsController{
                                    'aud'=>'http://api.lbs.local:10800/',
                                     'iat'=>time(),
                                      'exp'=>time()+3600,
-                                     'uid'=>$carte->id_carte],
+                                     'uid'=>(string) $carte->id_carte],
                                     $secret,'HS512');
 
                 $resp = $resp = $resp->withJson($token);
@@ -363,9 +396,15 @@ class LbsController{
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
 
-            $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
-            $resp = $resp = $resp->withJson($carte);
-            return $resp;
+            if($token->uid != $args['id']){
+                $resp = $resp->withStatus(401);
+                $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
+                return $resp;
+            }else{
+                $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
+                $resp = $resp->withJson($carte);
+                return $resp;
+            }
 
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);

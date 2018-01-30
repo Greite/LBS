@@ -9,4 +9,6 @@ class Carte extends \Illuminate\Database\Eloquent\Model
     protected $table = 'carte';
     protected $primaryKey = 'id_carte';
     public $timestamps = false;
+    public $incrementing = false;
+    public $keyType = "string";
 }
