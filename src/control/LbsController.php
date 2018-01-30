@@ -9,6 +9,10 @@ use \lbs\model\Sandwich;
 use \lbs\model\Commande;
 use \lbs\model\Carte;
 use Ramsey\Uuid\Uuid;
+use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException ;
+use Firebase\JWT\BeforeValidException;
 
 class LbsController{
 
@@ -294,9 +298,6 @@ class LbsController{
         }
     }
 
-
-    public function authentificationCarte(){}
-
     public function addCarte(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
         $carte = new Carte;
@@ -315,5 +316,73 @@ class LbsController{
 
         return $resp;
 
+    }
+
+    public function authentificationCarte(Request $req, Response $resp, $args){
+
+        if($req->hasHeader('Authorization') === false ) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Header Authorization manquant"));
+            return $resp;
+        }
+        else{
+            $head = $req->getHeader('Authorization');
+            $t = substr($head[0],5);
+            $c = base64_decode($t);
+            $couple = explode(':', $c);
+            $carte = Carte::where("id_carte","=",$args['id'])->first();
+
+            if(($couple[0] == $carte->mail) && (password_verify($couple[1],$carte->password))){
+
+                $secret = "test";
+
+                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte->id_carte.'/auth',
+                                   'aud'=>'http://api.lbs.local:10800/',
+                                    'iat'=>time(),
+                                     'exp'=>time()+3600,
+                                     'uid'=>$carte->id_carte],
+                                    $secret,'HS512');
+
+                $resp = $resp = $resp->withJson($token);
+                return $resp;
+            }
+            else{
+                $resp = $resp->withStatus(401);
+                $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+                return $resp;
+            }
+        }
+
+    }
+
+    public function getCarte(Request $req, Response $resp, $args){
+
+        try {
+            $secret = "test";
+            $h = $req->getHeader('Authorization')[0];
+            $tokenstring = sscanf($h, "Bearer %s")[0];
+            $token = JWT::decode($tokenstring, $secret, ['HS512']);
+
+            $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
+            $resp = $resp = $resp->withJson($carte);
+            return $resp;
+
+        }catch(ExpiredException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
+            return $resp;
+        }catch(SignatureInvalidException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
+            return $resp;
+        }catch(BeforeValidException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les information ne correspondent pas"));
+            return $resp;
+        }catch(\UnexpectedValueException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+            return $resp;
+        }
     }
 }
