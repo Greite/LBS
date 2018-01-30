@@ -330,7 +330,7 @@ class LbsController{
             $t = substr($head[0],5);
             $c = base64_decode($t);
             $couple = explode(':', $c);
-            $carte = Carte::where("id_carte","=",$args['id'])->get();
+            $carte = Carte::where("id_carte","=",$args['id'])->first();
 
             if(password_verify($couple[1],$carte[0]->password)){
 
@@ -362,6 +362,12 @@ class LbsController{
             $h = $req->getHeader('Authorization')[0];
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
+
+            $carte = Carte::where("id_carte","=",$args['id'])->first();
+            $resp = $resp = $resp->withJson($carte);
+            return $resp;
+
+
 
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
