@@ -9,6 +9,7 @@ use \lbs\model\Sandwich;
 use \lbs\model\Commande;
 use \lbs\model\Carte;
 use Ramsey\Uuid\Uuid;
+use Firebase\JWT\JWT;
 
 class LbsController{
 
@@ -294,9 +295,6 @@ class LbsController{
         }
     }
 
-
-    public function authentificationCarte(){}
-
     public function addCarte(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
         $carte = new Carte;
@@ -314,6 +312,40 @@ class LbsController{
         $resp = $resp->withJson(array('carte' => $card));
 
         return $resp;
+
+    }
+
+    public function authentificationCarte(Request $req, Response $resp, $args){
+
+        if($req->hasHeader('Authorization') === false ) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Header Authorization manquant"));
+            return $resp;
+        }
+        else{
+            $head = $req->getHeader('Authorization');
+            $t = substr($head[0],5);
+            $c = base64_decode($t);
+            $couple = explode(':', $c);
+            $carte = Carte::where("id_carte","=",$args['id'])->get();
+
+            if(password_verify($couple[1],$carte[0]->password)){
+
+                $secret = "test";
+
+                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte[0]->id_carte.'/auth',
+                                   'aud'=>'http://api.lbs.local:10800/',
+                                    'iat'=>time(),
+                                     'exp'=>time()+3600,
+                                     'uid'=>$carte[0]->id_carte],
+                                    $secret,'HS512');
+            }
+            else{
+                $resp = $resp->withStatus(401);
+                $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+                return $resp;
+            }
+        }
 
     }
 }
