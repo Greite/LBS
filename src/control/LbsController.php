@@ -330,17 +330,16 @@ class LbsController{
             $t = substr($head[0],5);
             $c = base64_decode($t);
             $couple = explode(':', $c);
-            $carte = Carte::where("id_carte","=",$args['id'])->get();
-
-            if(password_verify($couple[1],$carte[0]->password)){
+            $carte = Carte::where("id_carte","=",$args['id'])->first();
+            if(($couple[0]==$carte->mail) && (password_verify($couple[1],$carte->password))){
 
                 $secret = "test";
 
-                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte[0]->id_carte.'/auth',
+                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte->id_carte.'/auth',
                                    'aud'=>'http://api.lbs.local:10800/',
                                     'iat'=>time(),
                                      'exp'=>time()+3600,
-                                     'uid'=>$carte[0]->id_carte],
+                                     'uid'=>$carte->id_carte],
                                     $secret,'HS512');
 
                 $resp = $resp = $resp->withJson($token);
