@@ -295,7 +295,9 @@ class LbsController{
     }
 
 
-    public function authentificationCarte(){}
+    public function authentificationCarte(Request $req, Response $resp, $args){
+        echo password_verify("jmtractopelle", '$2y$10$vaq4Nziu2DYYjgMXaXreZeT4PtiqHBQDbhZ41XgG8c.D2mc.syXy2');
+    }
 
     public function addCarte(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
