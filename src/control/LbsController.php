@@ -332,15 +332,15 @@ class LbsController{
             $couple = explode(':', $c);
             $carte = Carte::where("id_carte","=",$args['id'])->first();
 
-            if(password_verify($couple[1],$carte[0]->password)){
+            if(($couple[0] == $carte->mail) && (password_verify($couple[1],$carte->password))){
 
                 $secret = "test";
 
-                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte[0]->id_carte.'/auth',
+                $token =JWT::encode( ['iss'=>'http://api.lbs.local:10080/carte/'.$carte->id_carte.'/auth',
                                    'aud'=>'http://api.lbs.local:10800/',
                                     'iat'=>time(),
                                      'exp'=>time()+3600,
-                                     'uid'=>$carte[0]->id_carte],
+                                     'uid'=>$carte->id_carte],
                                     $secret,'HS512');
 
                 $resp = $resp = $resp->withJson($token);
@@ -363,11 +363,9 @@ class LbsController{
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
 
-            $carte = Carte::where("id_carte","=",$args['id'])->first();
+            $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
             $resp = $resp = $resp->withJson($carte);
             return $resp;
-
-
 
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
