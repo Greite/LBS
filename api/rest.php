@@ -49,4 +49,7 @@ $app->get('/carte/{id}/auth','\lbs\control\LbsController:authentificationCarte')
 
 $app->post('/addcarte[/]','\lbs\control\LbsController:addCarte');
 
+$app->get('/carte/{id}[/]','\lbs\control\LbsController:getCarte');
+
+
 $app->run();

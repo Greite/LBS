@@ -10,6 +10,9 @@ use \lbs\model\Commande;
 use \lbs\model\Carte;
 use Ramsey\Uuid\Uuid;
 use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException ;
+use Firebase\JWT\BeforeValidException;
 
 class LbsController{
 
@@ -339,6 +342,9 @@ class LbsController{
                                      'exp'=>time()+3600,
                                      'uid'=>$carte[0]->id_carte],
                                     $secret,'HS512');
+
+                $resp = $resp = $resp->withJson($token);
+                return $resp;
             }
             else{
                 $resp = $resp->withStatus(401);
@@ -347,5 +353,32 @@ class LbsController{
             }
         }
 
+    }
+
+    public function getCarte(Request $req, Response $resp, $args){
+
+        try {
+            $secret = "test";
+            $h = $req->getHeader('Authorization')[0];
+            $tokenstring = sscanf($h, "Bearer %s")[0];
+            $token = JWT::decode($tokenstring, $secret, ['HS512']);
+
+        }catch(ExpiredException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
+            return $resp;
+        }catch(SignatureInvalidException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
+            return $resp;
+        }catch(BeforeValidException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les information ne correspondent pas"));
+            return $resp;
+        }catch(\UnexpectedValueException $e) {
+            $resp = $resp->withStatus(401);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+            return $resp;
+        }
     }
 }
