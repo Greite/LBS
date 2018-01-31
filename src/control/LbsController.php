@@ -16,6 +16,48 @@ use Firebase\JWT\BeforeValidException;
 
 class LbsController{
 
+    private $c = null;
+
+    public function __construct($container)
+    {
+        $this->c = $container;
+    }
+    
+    /*********TESTS*********/
+
+    public function getSands(Request $req, Response $resp, $args) {
+
+        try{
+            $sands = Categorie::findorFail($args['id'])->sandwichs;
+            $t = count($sands);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
+            return $resp;
+        }
+
+        $tabsandcat=[
+            "type"=>"collection",
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "categories"=>$sands
+        ];
+
+        return $this->c['view']->render($resp,'sands.twig', [
+        'sands' => $sands
+    ]);
+    }
+
+    public function getHome(Request $req, Response $resp, $args) {
+
+        $name = 'Maxime';
+
+        return $this->c['view']->render($resp,'home.twig', [
+        'name' => $name
+    ]);
+    }
+
+    /**********************/
+
     public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();
         $t = count($tablal);
@@ -286,8 +328,38 @@ class LbsController{
             $token = random_bytes(32);
             $token = bin2hex($token);
             $com->token = $token;
-            if (!is_null($parsedBody['carte'])){
+            if(!is_null($parsedBody['carte'])){
+                try {
+                    $secret = "test";
+                    $h = $req->getHeader('Authorization')[0];
+                    $tokenstring = sscanf($h, "Bearer %s")[0];
+                    $tok = JWT::decode($tokenstring, $secret, ['HS512']);
+                    if($tok->uid != $parsedBody['carte']){
+                        $resp = $resp->withStatus(401);
+                        $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
+                        return $resp;
+                    }else{
+                        $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
+                        $com->carte = $carte->id_carte;
+                    }
 
+                }catch(ExpiredException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
+                    return $resp;
+                }catch(SignatureInvalidException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
+                    return $resp;
+                }catch(BeforeValidException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les information ne correspondent pas"));
+                    return $resp;
+                }catch(\UnexpectedValueException $e) {
+                    $resp = $resp->withStatus(401);
+                    $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+                    return $resp;
+                }
             }
             $com->save();
             $resp = $resp->withStatus(201);
@@ -343,7 +415,7 @@ class LbsController{
                                    'aud'=>'http://api.lbs.local:10800/',
                                     'iat'=>time(),
                                      'exp'=>time()+3600,
-                                     'uid'=>$carte->id_carte],
+                                     'uid'=>(string) $carte->id_carte],
                                     $secret,'HS512');
 
                 $resp = $resp = $resp->withJson($token);
@@ -366,9 +438,15 @@ class LbsController{
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
 
-            $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
-            $resp = $resp = $resp->withJson($carte);
-            return $resp;
+            if($token->uid != $args['id']){
+                $resp = $resp->withStatus(401);
+                $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
+                return $resp;
+            }else{
+                $carte = Carte::select('mail','date_expiration','montant')->where("id_carte","=",$args['id'])->first();
+                $resp = $resp->withJson($carte);
+                return $resp;
+            }
 
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);

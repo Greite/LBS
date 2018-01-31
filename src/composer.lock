@@ -4,13 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "bdd3a6a70b89530122590b6a1b6b5159",
-    "content-hash": "b722c04ef68a0c11dbfab1e4c82ca88c",
-=======
-    "hash": "5c34de746eec86e265ea096b6ad7b968",
-    "content-hash": "8b348c52c554148366e61ef9ab5ab001",
->>>>>>> 4132d0a6d2a9e79a59c8021a54d61fd07ae66b54
+    "hash": "585ba63214fe08d4f6ec41422ad05d7c",
+    "content-hash": "5ab09de7e77c1de4b34f119ea8977fa2",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1027,8 +1022,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-11-07 14:12:55"
+            "time": "2018-01-18 22:16:57"
         },
         {
             "name": "twig/twig",
@@ -1095,9 +1089,6 @@
                 "templating"
             ],
             "time": "2017-09-27 18:10:31"
-=======
-            "time": "2018-01-18 22:16:57"
->>>>>>> 4132d0a6d2a9e79a59c8021a54d61fd07ae66b54
         }
     ],
     "packages-dev": [],

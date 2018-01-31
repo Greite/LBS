@@ -9,9 +9,6 @@ class Carte extends \Illuminate\Database\Eloquent\Model
     protected $table = 'carte';
     protected $primaryKey = 'id_carte';
     public $timestamps = false;
-
-    public function sandwichs(){
-
-        return $this->hasMany();
-    }
+    public $incrementing = false;
+    public $keyType = "string";
 }

@@ -27,11 +27,7 @@ $app->get('/categories[/]','\lbs\control\LbsController:getCategories');
 
 $app->get('/categories/{id}[/]','\lbs\control\LbsController:getCategoriesId');
 
-$app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
-
 $app->get('/sandwichs[/]', '\lbs\control\LbsController:getSandwichs');
-
-$app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
 
 $app->get('/sandwichs/{id}[/]','\lbs\control\LbsController:getSandwichsId');
 
@@ -40,8 +36,6 @@ $app->get('/categories/{id}/sandwichs[/]','\lbs\control\LbsController:getSandsOf
 $app->get('/sandwichs/{id}/categories[/]','\lbs\control\LbsController:getCatsOfSand')->setName('sandwich2cat');
 
 $app->get('/sandwichs/{id}/tailles[/]','\lbs\control\LbsController:getTaillesOfSand')->setName('sandwich2taille');
-
-$app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
 $app->post('/addcommande[/]','\lbs\control\LbsController:addCommande');
 
