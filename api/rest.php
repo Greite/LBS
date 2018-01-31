@@ -1,8 +1,6 @@
 <?php
 require '../src/vendor/autoload.php';
 
-$loader = new Twig_Loader_Filesystem('../src/templates');
-
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \lbs\model\Categorie as Categorie;

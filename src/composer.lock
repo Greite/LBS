@@ -4,18 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "ea51de5223475f67716ca3d984a81037",
-    "content-hash": "535b7aa6f591b433ee9357fffd7359cf",
-=======
-<<<<<<< HEAD
-    "hash": "bdd3a6a70b89530122590b6a1b6b5159",
-    "content-hash": "b722c04ef68a0c11dbfab1e4c82ca88c",
-=======
-    "hash": "5c34de746eec86e265ea096b6ad7b968",
-    "content-hash": "8b348c52c554148366e61ef9ab5ab001",
->>>>>>> 4132d0a6d2a9e79a59c8021a54d61fd07ae66b54
->>>>>>> 5e5759e8e2f09154a3a07829a80b41d16c6b8a8c
+    "hash": "585ba63214fe08d4f6ec41422ad05d7c",
+    "content-hash": "5ab09de7e77c1de4b34f119ea8977fa2",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -968,18 +958,6 @@
         },
         {
             "name": "symfony/translation",
-<<<<<<< HEAD
-            "version": "v3.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/translation.git",
-                "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
-                "reference": "17b5962d252b2d6d1d37a2485ebb7ddc5b2bef0a",
-=======
             "version": "v3.4.4",
             "source": {
                 "type": "git",
@@ -990,7 +968,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/translation/zipball/10b32cf0eae28b9b39fe26c456c42b19854c4b84",
                 "reference": "10b32cf0eae28b9b39fe26c456c42b19854c4b84",
->>>>>>> 5e5759e8e2f09154a3a07829a80b41d16c6b8a8c
                 "shasum": ""
             },
             "require": {
@@ -1045,12 +1022,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2018-01-03 07:37:34"
-=======
-<<<<<<< HEAD
-            "time": "2017-11-07 14:12:55"
->>>>>>> 5e5759e8e2f09154a3a07829a80b41d16c6b8a8c
+            "time": "2018-01-18 22:16:57"
         },
         {
             "name": "twig/twig",
@@ -1117,12 +1089,6 @@
                 "templating"
             ],
             "time": "2017-09-27 18:10:31"
-<<<<<<< HEAD
-=======
-=======
-            "time": "2018-01-18 22:16:57"
->>>>>>> 4132d0a6d2a9e79a59c8021a54d61fd07ae66b54
->>>>>>> 5e5759e8e2f09154a3a07829a80b41d16c6b8a8c
         }
     ],
     "packages-dev": [],

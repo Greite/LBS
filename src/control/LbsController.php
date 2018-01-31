@@ -16,6 +16,48 @@ use Firebase\JWT\BeforeValidException;
 
 class LbsController{
 
+    private $c = null;
+
+    public function __construct($container)
+    {
+        $this->c = $container;
+    }
+    
+    /*********TESTS*********/
+
+    public function getSands(Request $req, Response $resp, $args) {
+
+        try{
+            $sands = Categorie::findorFail($args['id'])->sandwichs;
+            $t = count($sands);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
+            return $resp;
+        }
+
+        $tabsandcat=[
+            "type"=>"collection",
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "categories"=>$sands
+        ];
+
+        return $this->c['view']->render($resp,'sands.twig', [
+        'sands' => $sands
+    ]);
+    }
+
+    public function getHome(Request $req, Response $resp, $args) {
+
+        $name = 'Maxime';
+
+        return $this->c['view']->render($resp,'home.twig', [
+        'name' => $name
+    ]);
+    }
+
+    /**********************/
+
     public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();
         $t = count($tablal);
