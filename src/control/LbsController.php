@@ -286,6 +286,9 @@ class LbsController{
             $token = random_bytes(32);
             $token = bin2hex($token);
             $com->token = $token;
+            if (!is_null($parsedBody['carte'])){
+
+            }
             $com->save();
             $resp = $resp->withStatus(201);
             $date = explode(" ", $com->date_livraison);
@@ -304,7 +307,7 @@ class LbsController{
         $token = random_bytes(5);
         $token = bin2hex($token);
         $carte->id_carte = $token;
-        $carte->mail = filter_var($parsedBody['mail'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $carte->mail = filter_var($parsedBody['mail'], FILTER_VALIDATE_EMAIL);
         $carte->password = password_hash(filter_var($parsedBody['password'], FILTER_SANITIZE_SPECIAL_CHARS), PASSWORD_DEFAULT);
         $carte->date_expiration = date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 365 day"));;
         $carte->montant = 0;
