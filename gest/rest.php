@@ -28,10 +28,8 @@ $app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
 
 $app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
 
-$app->get('/categories/{id}/sandwichs[/]','\lbs\control\LbsController:getSands');
+$app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
 $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
-
-$app->get('/home[/]','\lbs\control\LbsController:getHome');
 
 $app->run();
