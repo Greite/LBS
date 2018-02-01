@@ -26,6 +26,17 @@
                     <label for="type_pain">Type pain</label>
                     <input type="text" class="form-control" id="type_pain" name="type_pain" placeholder="Pain">
                 </div>
+                <label for="categorie">Catégorie</label>
+                <div class="card" id="categorie">
+                <div class="card-body">
+                {% for cat in cats %}
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="{{ cat.nom }}" name="{{ cat.id }}">
+                        <label class="form-check-label" for="{{ cat.nom }}">{{ cat.nom }}</label>
+                    </div>
+                {% endfor %}
+                </div>
+                </div>
                 <center><button type="submit" class="btn btn-success">Enregistrer</button></center>
             </form>
         </div>

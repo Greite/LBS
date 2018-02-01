@@ -41,7 +41,14 @@ class LbsController{
     }
 
     public function getAddSandwich(Request $req, Response $resp, $args){
-        return $this->c['view']->render($resp,'AjouterSandwich.twig');
+        try{
+            $cats = Categorie::with('sandwichs')->get();
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible'));
+            return $resp;
+        }
+        return $this->c['view']->render($resp,'AjouterSandwich.twig', ['cats' => $cats]);
     }
 
     public function addSandwich(Request $req, Response $resp, $args){
@@ -51,9 +58,18 @@ class LbsController{
         $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
         $sand->type_pain = filter_var($parsedBody['type_pain'], FILTER_SANITIZE_SPECIAL_CHARS);
         $sand->save();
+        $i=0;
+        foreach ($parsedBody as $key => $value){
+            if($i>2) {
+                if ($value == "on"){
+                    $sand->categories()->attach([$key]);
+                }
+            }
+            $i++;
+        }
         $resp = $resp->withStatus(201);
         $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
-        $resp = $resp->withJson(array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description));
+        $resp = $resp->withJson(array( 'sandwich' => array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description, 'categorie(s)' => $sand->categories()->get())));
         return $resp;
     }
 
