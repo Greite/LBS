@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Sandwichs</title>
+	<title>Sandwichs par catégorie</title>
 </head>
 
 <body>
 
-	<h1>Sandwichs</h1>
-
-	<p>{{sands}}</p>
+	<h1>Sandwichs par catégorie</h1>
+	<ul>
+	   {% for cat in cats %}
+	         <li><strong>Nom : </strong>{{cat.nom}}</li>
+	         <li><strong>Description : </strong>{{cat.description}}</li>
+	         <li><strong>Sandwichs : </strong></li>
+	      	 <ul>
+		         {% for value in cat.sandwichs %}
+		         	<li><strong>Nom : </strong>{{value.nom}}</li>
+		         {% endfor %}<br>
+	     	 </ul>
+	   {% endfor %}
+   </ul>
 
 </body>
 </html>
