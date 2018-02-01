@@ -2,23 +2,29 @@
 <html>
 <head>
 	<title>Sandwichs par catégorie</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Sandwichs par catégorie</h1>
+		</div>
+	</div>
 
-	<h1>Sandwichs par catégorie</h1>
-	<ul>
 	   {% for cat in cats %}
-	         <li><strong>Nom : </strong>{{cat.nom}}</li>
-	         <li><strong>Description : </strong>{{cat.description}}</li>
-	         <li><strong>Sandwichs : </strong></li>
-	      	 <ul>
-		         {% for value in cat.sandwichs %}
-		         	<li><strong>Nom : </strong>{{value.nom}}</li>
-		         {% endfor %}<br>
-	     	 </ul>
+		<ul class="list-group">
+	         <li class="list-group-item"><strong>Nom : </strong>{{cat.nom}}</li>
+	         <li class="list-group-item"><strong>Description : </strong>{{cat.description}}</li>
+	         <li class="list-group-item"><strong>Sandwichs :
+					 <ul class="list-group">
+                         {% for value in cat.sandwichs %}
+						 <li class="list-group-item"><strong>Nom : </strong>{{value.nom}}</li>
+                         {% endfor %}<br>
+					 </ul>
+				 </strong></li>
+		</ul>
+		   <hr>
 	   {% endfor %}
-   </ul>
-
 </body>
 </html>
