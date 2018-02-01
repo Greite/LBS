@@ -28,7 +28,7 @@ class LbsController{
     public function getSandsbyCats(Request $req, Response $resp, $args) {
 
         try{
-            $sands = Categorie::with('sandwichs')->get();
+            $cats = Categorie::with('sandwichs')->get();
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
@@ -36,7 +36,7 @@ class LbsController{
         }
 
         return $this->c['view']->render($resp,'sands.twig', [
-        'sands' => $sands
+        'cats' => $cats
     ]);
     }
 
