@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ajouter un sandwich</title>
+    <title>Modifier un sandwich</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Ajouter un sandwich</h1>
+            <h1 class="display-4">Modifier un sandwich</h1>
         </div>
     </div>
     <div class="card" style="width: 20rem; margin-left: 40vw;">
         <div class="card-body">
-            <form method="post" action="postsandwich" enctype='application/json'>
+            <form method="post" action="putsandwich" enctype='application/json'>
                 <div class="form-group">
                     <label for="nom">Nom</label>
                     <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom">

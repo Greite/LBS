@@ -32,6 +32,12 @@ $app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
 $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
-$app->delete('/delsandwich[/]','\lbs\control\LbsController:deleteSandwich');
+$app->delete('/delsandwich/{id}[/]','\lbs\control\LbsController:deleteSandwich');
+
+$app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
+
+$app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
+
+$app->get('/updsandwich/{id}[/]','\lbs\control\LbsController:getUpdSandwich');
 
 $app->run();

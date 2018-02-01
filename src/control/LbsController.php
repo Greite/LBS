@@ -24,14 +24,8 @@ class LbsController{
     }
     
     public function getSandsbyCats(Request $req, Response $resp, $args) {
-
-        try{
-            $cats = Categorie::with('sandwichs')->get();
-        } catch (ModelNotFoundException $e) {
-            $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /categories/'.$args['id']));
-            return $resp;
-        }
+            
+        $cats = Categorie::with('sandwichs')->get();
 
         return $this->c['view']->render($resp,'ListeSandwichs.twig', [
         'cats' => $cats
@@ -40,8 +34,9 @@ class LbsController{
 
     public function deleteSandwich(Request $req, Response $resp, $args) {
 
-
-
+        $sand = Sandwich::find($args['id']);
+        $sand->delete();
+        return $resp;
     }
 
     public function getAddSandwich(Request $req, Response $resp, $args){
@@ -59,6 +54,12 @@ class LbsController{
         $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
         $resp = $resp->withJson(array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description));
         return $resp;
+    }
+
+    public function getUpdSandwich(Request $req, Response $resp, $args){
+        return $this->c['view']->render($resp,'ModifierSandwich.twig', [
+            'id' => $args['id'];
+        ]);
     }
 
     public function getCategories(Request $req, Response $resp, $args){
