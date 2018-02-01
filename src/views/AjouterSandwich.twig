@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sandwichs par catégorie</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Ajouter un sandwich</h1>
+        </div>
+    </div>
+    <div class="card" style="width: 20rem; margin-left: 40vw;">
+        <div class="card-body">
+            <form method="post" action="postsandwich">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+                </div>
+                <div class="form-group">
+                    <label for="type_pain">Type pain</label>
+                    <input type="text" class="form-control" id="type_pain" name="type_pain" placeholder="Pain">
+                </div>
+                <center><button type="submit" class="btn btn-success">Enregistrer</button></center>
+            </form>
+        </div>
+        </div>
+</body>
+</html>
