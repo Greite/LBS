@@ -32,4 +32,8 @@ $app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
 $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
+$app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
+
+$app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
+
 $app->run();
