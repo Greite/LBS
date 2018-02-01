@@ -19,7 +19,12 @@
 	         <li class="list-group-item"><strong>Sandwichs :
 					 <ul class="list-group">
                          {% for value in cat.sandwichs %}
-						 <li class="list-group-item"><strong>Nom : </strong>{{value.nom}}</li>
+						 <li class="list-group-item">
+						 	<strong>Nom : </strong>{{value.nom}}
+						 	<form action="http://gest.lbs.local:11080/rest.php/sandwichs">
+						 		<button type="button" class="btn btn-danger">Supprimer</button>
+						 	</form>
+						 </li>
                          {% endfor %}<br>
 					 </ul>
 				 </strong></li>

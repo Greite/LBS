@@ -23,8 +23,6 @@ class LbsController{
         $this->c = $container;
     }
     
-    /*********TESTS*********/
-
     public function getSandsbyCats(Request $req, Response $resp, $args) {
 
         try{
@@ -35,12 +33,16 @@ class LbsController{
             return $resp;
         }
 
-        return $this->c['view']->render($resp,'sands.twig', [
+        return $this->c['view']->render($resp,'ListeSandwichs.twig', [
         'cats' => $cats
     ]);
     }
 
-    /**********************/
+    public function deleteSandwich(Request $req, Response $resp, $args) {
+
+
+
+    }
 
     public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();

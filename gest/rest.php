@@ -32,4 +32,6 @@ $app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
 $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
+$app->delete('/delsandwich[/]','\lbs\control\LbsController:deleteSandwich');
+
 $app->run();
