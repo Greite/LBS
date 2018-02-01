@@ -11,7 +11,9 @@
 			<h1 class="display-4">Sandwichs par catégorie</h1>
 		</div>
 	</div>
-
+	<form action="addsandwich" method="get">
+		<button type="submit" class="btn btn-primary">Ajouter un sandwich</button>
+	</form>
 	   {% for cat in cats %}
 		<ul class="list-group">
 	         <li class="list-group-item"><strong>Nom : </strong>{{cat.nom}}</li>
@@ -19,7 +21,15 @@
 	         <li class="list-group-item"><strong>Sandwichs :
 					 <ul class="list-group">
                          {% for value in cat.sandwichs %}
-						 <li class="list-group-item"><strong>Nom : </strong>{{value.nom}}</li>
+						 <li class="list-group-item">
+						 	<strong>Nom : </strong><span>{{value.nom}}</span>
+						 	<form action="updsandwich/{{value.id}}" method="get">
+								<button type="submit" class="btn btn-warning">Modifier</button>
+							</form>
+						 	<form action="delsandwich/{{value.id}}" method="post">
+						 		<button type="submit" class="btn btn-danger">Supprimer</button>
+						 	</form>
+						 </li>
                          {% endfor %}<br>
 					 </ul>
 				 </strong></li>
