@@ -40,6 +40,23 @@ class LbsController{
     ]);
     }
 
+    public function getAddSandwich(Request $req, Response $resp, $args){
+        return $this->c['view']->render($resp,'AjouterSandwich.twig');
+    }
+
+    public function addSandwich(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $sand = new Sandwich;
+        $sand->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $sand->type_pain = filter_var($parsedBody['type_pain'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $sand->save();
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
+        $resp = $resp->withJson(array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description));
+        return $resp;
+    }
+
     /**********************/
 
     public function getCategories(Request $req, Response $resp, $args){
