@@ -1,3 +1,10 @@
+<?php
+session_start();
+$token = bin2hex(mcrypt(32, MCRYPT_DEV_URANDOM));
+$_SESSION['token'] = $token;
+echo $token;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +44,7 @@
                 {% endfor %}
                 </div>
                 </div>
+                <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" />
                 <center><button type="submit" class="btn btn-success">Enregistrer</button></center>
             </form>
         </div>

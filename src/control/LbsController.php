@@ -51,30 +51,43 @@ class LbsController{
     }
 
     public function addSandwich(Request $req, Response $resp, $args){
-        $parsedBody = $req->getParsedBody();
-        $sand = new Sandwich;
-        $sand->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $sand->type_pain = filter_var($parsedBody['type_pain'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $sand->save();
-        $i=0;
-        foreach ($parsedBody as $key => $value){
-            if($i>2) {
-                if ($value == "on"){
-                    $sand->categories()->attach([$key]);
+        /*session_start();
+        echo $parsedBody['token'];
+        if (isset($_SESSION['token']) && isset($parsedBody['token']) && !empty($_SESSION['token']) && !empty($parsedBody['token'])) {
+            if ($_SESSION['token'] == $parsedBody['token']) {*/
+                $parsedBody = $req->getParsedBody();
+                $sand = new Sandwich;
+                $sand->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $sand->type_pain = filter_var($parsedBody['type_pain'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $sand->save();
+                $i=0;
+                foreach ($parsedBody as $key => $value){
+                    if($i>2) {
+                        if ($value == "on"){
+                            $sand->categories()->attach([$key]);
+                        }
+                    }
+                    $i++;
                 }
-            }
-            $i++;
+                $resp = $resp->withStatus(201);
+                $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
+                $resp = $resp->withJson(array( 'sandwich' => array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description, 'categorie(s)' => $sand->categories()->get())));
+                return $resp;
+            /*}
         }
-        $resp = $resp->withStatus(201);
-        $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
-        $resp = $resp->withJson(array( 'sandwich' => array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description, 'categorie(s)' => $sand->categories()->get())));
-        return $resp;
+
+        else {
+            $resp = $resp->withStatus(403);
+            $resp = $resp->withJson(array('error' => 403, 'type' => 'Mauvais token'));
+            return $resp;
+        }
+        session_destroy();*/
     }
 
     public function getUpdSandwich(Request $req, Response $resp, $args){
         return $this->c['view']->render($resp,'ModifierSandwich.twig', [
-            'id' => $args['id'];
+            'id' => $args['id']
         ]);
     }
 
