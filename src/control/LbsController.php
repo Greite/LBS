@@ -98,6 +98,7 @@ class LbsController{
         }else{
             $sand->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
             $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $sand->type_pain = filter_var($parsedBody['type_pain'], FILTER_SANITIZE_SPECIAL_CHARS);
             $sand->save();
             return $resp->withRedirect('/sandwichs');
         }

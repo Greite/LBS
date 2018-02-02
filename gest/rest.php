@@ -38,7 +38,9 @@ $app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
 
 $app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
 
-$app->get('/putsandwich/{id}[/]','\lbs\control\LbsController:getPutSandwich');
+$app->get('/updsandwich/{id}[/]','\lbs\control\LbsController:getPutSandwich');
+
+$app->post('/putsandwich/{id}[/]','\lbs\control\LbsController:putSandwich');
 
 $app->get('/connexion[/]','\lbs\control\LbsController:getConnexion');
 
