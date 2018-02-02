@@ -32,13 +32,13 @@ $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
 
 $app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
-$app->delete('/delsandwich/{id}[/]','\lbs\control\LbsController:deleteSandwich');
+$app->post('/delsandwich/{id}[/]','\lbs\control\LbsController:deleteSandwich');
 
 $app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
 
 $app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
 
-$app->get('/updsandwich/{id}[/]','\lbs\control\LbsController:getUpdSandwich');
+$app->get('/putsandwich/{id}[/]','\lbs\control\LbsController:getPutSandwich');
 
 $app->get('/connexion[/]','\lbs\control\LbsController:getConnexion');
 

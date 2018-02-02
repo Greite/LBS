@@ -22,8 +22,9 @@
 						 <li class="list-group-item">
 						 	<strong>Nom : </strong><span>{{value.nom}}</span>
 						 	<a href="updsandwich/{{value.id}}" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Modifier</a>
-
-						 	<a href="delsandwich/{{value.id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Supprimer</a>
+						 	<form method="post" action="delsandwich/{{value.id}}">
+						 		<button class="btn btn-danger" type="submit">Supprimer</button>
+						 	</form>
 						 </li>
                          {% endfor %}<br>
 					 </ul>

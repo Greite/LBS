@@ -36,7 +36,7 @@ class LbsController{
 
         $sand = Sandwich::find($args['id']);
         $sand->delete();
-        return $resp;
+        return $resp->withRedirect('/sandwichs');
     }
 
     public function getAddSandwich(Request $req, Response $resp, $args){
@@ -70,10 +70,8 @@ class LbsController{
                     }
                     $i++;
                 }
-                $resp = $resp->withStatus(201);
-                $resp = $resp->withHeader('Location', "api.lbs.local:10080/sandwich/".$sand->id);
-                $resp = $resp->withJson(array( 'sandwich' => array('id' => $sand->id, 'nom' => $sand->nom, 'description' => $sand->description, 'categorie(s)' => $sand->categories()->get())));
-                return $resp;
+
+                return $resp->withRedirect('/sandwichs');
             /*}
         }
 
@@ -85,10 +83,24 @@ class LbsController{
         session_destroy();*/
     }
 
-    public function getUpdSandwich(Request $req, Response $resp, $args){
+    public function getPutSandwich(Request $req, Response $resp, $args){
         return $this->c['view']->render($resp,'ModifierSandwich.twig', [
             'id' => $args['id']
         ]);
+    }
+
+    public function putSandwich(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();   
+        $sand = Sandwich::find($args['id']);
+        
+        if (!isset($parsedBody['nom']) || !isset($parsedBody['description'])) {
+            return \lbs\common\errors\BadUri::error($req, $resp);
+        }else{
+            $sand->nom = filter_var($parsedBody['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $sand->description = filter_var($parsedBody['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $sand->save();
+            return $resp->withRedirect('/sandwichs');
+        }
     }
 
     public function getConnexion(Request $req, Response $resp, $args){
