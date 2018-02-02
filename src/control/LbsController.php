@@ -91,6 +91,10 @@ class LbsController{
         ]);
     }
 
+    public function getConnexion(Request $req, Response $resp, $args){
+        return $this->c['view']->render($resp,'Connexion.twig');
+    }
+
     public function getCategories(Request $req, Response $resp, $args){
         $tablal = Categorie::all();
         $t = count($tablal);

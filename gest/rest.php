@@ -28,9 +28,9 @@ $app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
 
 $app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
 
-$app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
-
 $app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
+
+$app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
 
 $app->delete('/delsandwich/{id}[/]','\lbs\control\LbsController:deleteSandwich');
 
@@ -39,5 +39,7 @@ $app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
 $app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
 
 $app->get('/updsandwich/{id}[/]','\lbs\control\LbsController:getUpdSandwich');
+
+$app->get('/connexion[/]','\lbs\control\LbsController:getConnexion');
 
 $app->run();

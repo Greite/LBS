@@ -21,11 +21,9 @@
                          {% for value in cat.sandwichs %}
 						 <li class="list-group-item">
 						 	<strong>Nom : </strong><span>{{value.nom}}</span>
-						 	<a href="updsandwich" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Modifier</a>
+						 	<a href="updsandwich/{{value.id}}" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Modifier</a>
 
-						 	<form action="delsandwich/{{value.id}}" method="post">
-						 		<button type="submit" class="btn btn-danger">Supprimer</button>
-						 	</form>
+						 	<a href="delsandwich/{{value.id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Supprimer</a>
 						 </li>
                          {% endfor %}<br>
 					 </ul>
