@@ -44,4 +44,6 @@ $app->post('/putsandwich/{id}[/]','\lbs\control\LbsController:putSandwich');
 
 $app->get('/connexion[/]','\lbs\control\LbsController:getConnexion');
 
+$app->post('/login[/]','\lbs\control\LbsController:login');
+
 $app->run();

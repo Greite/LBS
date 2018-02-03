@@ -13,6 +13,9 @@
     </div>
     <div class="card" style="width: 20rem; margin-left: 40vw;">
         <div class="card-body">
+            {% if mess %}
+                <p class="warning">{{ mess }}</p>
+            {% endif %}
             <form method="post" action="login" enctype='application/json'>
                 <div class="form-group">
                     <label for="identifiant">Identifiant</label>
@@ -20,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    <input type="text" class="form-control" id="password" name="password" placeholder="Mot de passe">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
                 </div>
                 <center><button type="submit" class="btn btn-success">Se connecter</button></center>
             </form>
