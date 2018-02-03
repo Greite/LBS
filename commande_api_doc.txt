@@ -1,0 +1,4 @@
+
+Commande pour lancer apidoc (dans le repertoire LBS) :
+
+apidoc -i ./ -o doc/api.doc/
