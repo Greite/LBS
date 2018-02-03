@@ -8,6 +8,7 @@ use \lbs\model\Categorie;
 use \lbs\model\Sandwich;
 use \lbs\model\Commande;
 use \lbs\model\Carte;
+use \lbs\model\User;
 use Ramsey\Uuid\Uuid;
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
@@ -106,6 +107,18 @@ class LbsController{
 
     public function getConnexion(Request $req, Response $resp, $args){
         return $this->c['view']->render($resp,'Connexion.twig');
+    }
+
+    public function login(Request $req, Response $resp, $args){
+        $log = User::select()->first();
+
+        if(empty($_POST['identifiant']) || empty($_POST['password']) || $_POST['password'] != $log->password || $_POST['identifiant'] != $log->login){
+            $mess = "Les champs ne sont pas rempli ou ne correspondent pas";
+            return $this->c['view']->render($resp, 'Connexion.twig',['mess'=>$mess]);
+        }
+        else {
+            return $this->c['view']->render($resp,'Login.twig');
+        }
     }
 
     public function getCategories(Request $req, Response $resp, $args){
