@@ -3,9 +3,6 @@ require '../src/vendor/autoload.php';
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \lbs\model\Categorie as Categorie;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
 $settings = require_once '../src/conf/api_settings.php';
 $errors = require_once '../src/conf/api_errors.php';
@@ -25,26 +22,26 @@ $app = new \Slim\App($c);
 //$c = $app->getContainer();
 
 
-$app->post('/addcategorie[/]', '\lbs\control\LbsController:addCategorie');
+$app->post('/addcategorie[/]', '\lbs\control\GestController:addCategorie');
 
-$app->put('/updatecategorie/{id}[/]', '\lbs\control\LbsController:updateCategorie');
+$app->put('/updatecategorie/{id}[/]', '\lbs\control\GestController:updateCategorie');
 
-$app->get('/commande/{id}[/]','\lbs\control\LbsController:getCommande');
+$app->get('/commande/{id}[/]','\lbs\control\GestController:getCommande');
 
-$app->get('/sandwichs[/]','\lbs\control\LbsController:getSandsByCats');
+$app->get('/sandwichs[/]','\lbs\control\GestController:getSandsByCats');
 
-$app->post('/delsandwich/{id}[/]','\lbs\control\LbsController:deleteSandwich');
+$app->post('/delsandwich/{id}[/]','\lbs\control\GestController:deleteSandwich');
 
-$app->get('/addsandwich[/]','\lbs\control\LbsController:getAddSandwich');
+$app->get('/addsandwich[/]','\lbs\control\GestController:getAddSandwich');
 
-$app->post('/postsandwich[/]','\lbs\control\LbsController:addSandwich');
+$app->post('/postsandwich[/]','\lbs\control\GestController:addSandwich');
 
-$app->get('/updsandwich/{id}[/]','\lbs\control\LbsController:getPutSandwich');
+$app->get('/updsandwich/{id}[/]','\lbs\control\GestController:getPutSandwich');
 
-$app->post('/putsandwich/{id}[/]','\lbs\control\LbsController:putSandwich');
+$app->post('/putsandwich/{id}[/]','\lbs\control\GestController:putSandwich');
 
-$app->get('/connexion[/]','\lbs\control\LbsController:getConnexion');
+$app->get('/connexion[/]','\lbs\control\GestController:getConnexion');
 
-$app->post('/login[/]','\lbs\control\LbsController:login');
+$app->post('/login[/]','\lbs\control\GestController:login');
 
 $app->run();
