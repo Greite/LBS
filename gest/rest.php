@@ -19,8 +19,6 @@ $db->bootEloquent();
 $configuration = array_merge($settings, $errors, $dependencies);
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
-//$c = $app->getContainer();
-
 
 $app->post('/addcategorie[/]', '\lbs\control\GestController:addCategorie');
 

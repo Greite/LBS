@@ -101,7 +101,7 @@ class GestController{
             return $this->c['view']->render($resp, 'Connexion.twig',['mess'=>$mess]);
         }
         else {
-            return $this->c['view']->render($resp,'Login.twig');
+            return $resp->withRedirect('/sandwichs');
         }
     }
 
