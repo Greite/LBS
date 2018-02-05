@@ -1,1 +1,3 @@
 # LBS
+
+# docker-compose up
